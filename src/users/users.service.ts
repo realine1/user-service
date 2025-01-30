@@ -35,7 +35,7 @@ export class UsersService {
   async findByUsername(username: string): Promise<User> {
     const user = await this.userRepository.findOne({ where: { username } });
     if (!user) {
-      throw new Error(`User with username ${username} not found`);
+      throw new RpcException(`User with username ${username} not found`);
     }
     return user;
   }

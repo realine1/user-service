@@ -18,7 +18,7 @@ export class UsersController {
   }
 
   @MessagePattern({ cmd: 'get-user' })
-  async getUserByUsername(@Payload() payload: { username: string }) {
-    return this.usersService.findByUsername(payload.username);
+  async getUserByUsername(@Payload() username: string) {
+    return this.usersService.findByUsername(username);
   }
 }
