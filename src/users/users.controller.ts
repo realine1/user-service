@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
@@ -7,24 +7,14 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @MessagePattern({ cmd: 'create-user' })
+  async createUser(@Payload() payload: CreateUserDto) {
+    return this.usersService.create(payload);
   }
 
-  @Get()
-  async findAll() {
+  @MessagePattern({ cmd: 'get-all-user' })
+  async findAllUser() {
     return this.usersService.findAll();
-  }
-
-  @Get(':id')
-  async findById(@Param('id') id: number) {
-    return this.usersService.findById(id);
-  }
-
-  @Get('username/:username')
-  async findByUsername(@Param('username') username: string) {
-    return this.usersService.findByUsername(username);
   }
 
   @MessagePattern({ cmd: 'get-user' })
