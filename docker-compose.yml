@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8       # Use MySQL 8 image
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}    # MySQL root password
+      MYSQL_DATABASE: ${DB_NAME}             # MySQL database name
+      MYSQL_USER: ${DB_USERNAME}             # MySQL username
+      MYSQL_PASSWORD: ${DB_PASSWORD}        # MySQL password
+    ports:
+      - "${DB_PORT}:${DB_PORT}"             # Expose MySQL port
+    volumes:
+      - user-service-db-data:/var/lib/mysql
+    restart: always
+
+volumes:
+  user-service-db-data:
+    driver: local
